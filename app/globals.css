@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Paleta: Amanecer en la cordillera */
+  --bg:         #f7f4ef;
+  --bg-warm:    #f0ebe2;
+  --panel:      #faf8f4;
+  --card:       #ffffff;
+  --border:     #e2d9cc;
+  --border-mid: #c8bfb0;
+
+  --ink:        #1a1208;
+  --ink-mid:    #3d3020;
+  --ink-soft:   #6b5c47;
+  --ink-muted:  #9c8b78;
+  --ink-faint:  #c4b8a8;
+
+  --accent:     #c2510f;   /* ocre cálido / terracota */
+  --accent-lt:  #e8844a;
+  --accent-bg:  #fdf0e8;
+
+  --sky:        #4a7fa5;   /* azul cielo andino */
+  --sky-lt:     #7aafc8;
+  --sky-bg:     #eaf3f9;
+
+  --leaf:       #4a7a45;   /* verde cordillera */
+  --leaf-lt:    #7aaa75;
+  --leaf-bg:    #edf5ec;
+
+  --gold:       #b8860b;
+  --gold-bg:    #fdf6e3;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-mid); }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.anim-up { animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-in { animation: fadeIn 0.3s ease both; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-warm) 25%, var(--border) 50%, var(--bg-warm) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 4px;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  body { overflow: auto; height: auto; }
+}

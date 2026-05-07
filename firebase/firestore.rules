@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users: read public profiles, write only own
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // Favorites: only owner
+      match /favorites/{birdUid} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Sightings: read public ones, write own
+    match /sightings/{sightingId} {
+      allow read: if resource.data.isPublic == true || 
+                    (request.auth != null && request.auth.uid == resource.data.userId);
+      allow create: if request.auth != null && 
+                       request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null && 
+                               request.auth.uid == resource.data.userId;
+    }
+
+    // Feed: read all, write only authenticated (server validates)
+    match /feed/{feedId} {
+      allow read: if true;
+      allow create: if request.auth != null && 
+                       request.resource.data.userId == request.auth.uid;
+      allow delete: if request.auth != null && 
+                       request.auth.uid == resource.data.userId;
+    }
+  }
+}
